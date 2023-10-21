@@ -8,15 +8,7 @@ const {v4}=require("uuid");
 const path=require("path")
 const cors=require("cors");
 
-require("dotenv").config({path:"./.env"})
 
-const corsOptions ={
-   origin:'*', 
-   credentials:true,            //access-control-allow-credentials:true
-   optionSuccessStatus:200,
-}
-
-app.use(cors(corsOptions)) // Use this after the variable declaration
 const oauth2Client = new google.auth.OAuth2(
    process.env.CLIENT_ID,process.env.CLIENT_SECRET,process.env.REDIRECT_URL
 );
