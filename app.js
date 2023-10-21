@@ -47,10 +47,6 @@ app.get("/google/redirect",async(req,res)=>{
 
 
 app.get("/events",async(req,res)=>{
-
-    console.log("ui",process.env.CLIENT_ID,process.env.CLIENT_SECRET,process.env.REDIRECT_URL)
-
-
    if(!oauth2Client.credentials.access_token){
        res.send({redirect:true})
        return 
