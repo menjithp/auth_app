@@ -18,7 +18,7 @@ const scopes = [
   'https://www.googleapis.com/auth/calendar'
 ];
 
-const calendar = google.calendar({version : "v3",auth:"AIzaSyAQhXUCt4yrSuzG7_AWrKT6d4SCIELmA48"});
+const calendar = google.calendar({version : "v3",auth:process.env.AUTH_KEY});
 
 app.get("/",(req,res)=>{
 
