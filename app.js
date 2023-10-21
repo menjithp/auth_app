@@ -80,7 +80,7 @@ app.get("/events",async(req,res)=>{
                   requestId: 'coding-calendar-demo'
                 }
               },
-            attendees:[{email:"menjithchandra2000@gmail.com"},{email:"biohackering@gmail.com"}]             
+            attendees:[]             
         },
       });
 
