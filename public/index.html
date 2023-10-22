@@ -16,6 +16,7 @@
             let ele=document.getElementById("google-meet-link")
             let response=await fetch("/events")
             response=await response.json()
+            console.log("response",response)
             if (response.redirect){
 
                 console.log("data")
