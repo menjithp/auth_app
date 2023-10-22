@@ -48,7 +48,8 @@ app.get("/google/redirect",async(req,res)=>{
 
 app.get("/events",async(req,res)=>{
    if(!oauth2Client.credentials.access_token){
-       res.send({redirect:true})
+       //res.send({redirect:true})
+      res.redirect("/google")
        return 
    }
 
