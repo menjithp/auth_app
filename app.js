@@ -52,6 +52,7 @@ app.get("/events",async(req,res)=>{
        return 
    }
 
+   console.log("oauthclient",oauth2Client.credentials)
 
     let response=await calendar.events.insert({
         calendarId: 'primary',
