@@ -8,6 +8,12 @@ const {v4}=require("uuid");
 const path=require("path")
 const cors=require("cors");
 
+require("dotenv").config({path:"./.env"})
+
+app.set('view engine','ejs')
+app.use(express.static(path.join(__dirname,"public")))
+
+
 
 const oauth2Client = new google.auth.OAuth2(
    process.env.CLIENT_ID,process.env.CLIENT_SECRET,process.env.REDIRECT_URL
@@ -21,13 +27,10 @@ const scopes = [
 const calendar = google.calendar({version : "v3",auth:process.env.AUTH_KEY});
 
 app.get("/",(req,res)=>{
-
-    res.sendFile(path.join(__dirname, '/public/index.html'));
+    res.render('data',{data:""})
 })
 
 app.get("/google",(req,res)=>{
-
-
     const url = oauth2Client.generateAuthUrl({
         access_type: 'offline',
         scope: scopes
@@ -35,26 +38,18 @@ app.get("/google",(req,res)=>{
       res.redirect(url)
 })
 app.get("/google/redirect",async(req,res)=>{
-
-
     const token=req.query.code
     const {tokens} = await oauth2Client.getToken(token)
     oauth2Client.setCredentials(tokens);
-
     res.redirect("/events")
   
 })
 
-
 app.get("/events",async(req,res)=>{
    if(!oauth2Client.credentials.access_token){
-       //res.send({redirect:true})
-      res.redirect("/google")
+       res.send({redirect:true})
        return 
    }
-
-   console.log("oauthclient",oauth2Client.credentials)
-
     let response=await calendar.events.insert({
         calendarId: 'primary',
         auth:oauth2Client,
@@ -78,14 +73,16 @@ app.get("/events",async(req,res)=>{
                   requestId: 'coding-calendar-demo'
                 }
               },
-            attendees:[]             
+            attendees:[{email:"menjithchandra2000@gmail.com"},{email:"biohackering@gmail.com"}]             
         },
       });
-
-
-    res.send({
-        msg:response.data.hangoutLink
-    })
+      
+    if(req.query.front){
+      res.send({data:response.data.hangoutLink})
+    }else{
+      res.render('data',{data:response.data.hangoutLink})
+    }
+    
 })
 
 
